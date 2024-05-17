@@ -68,7 +68,7 @@ public class GerenciadorDeProdutos {
                 produto.setTamanhoNumerico(scanner.nextInt());
                 System.out.print("Novo tamanho: ");
                 produto.setTamanho(scanner.next().charAt(0));
-                scanner.nextLine();  // Limpar o buffer
+                scanner.nextLine();
 
                 System.out.println("Produto alterado com sucesso.");
                 salvarProdutos();

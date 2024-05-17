@@ -57,7 +57,6 @@ public class App {
                         String email = scanner.nextLine();
                         System.out.print("Telefone: ");
                         String telefone = scanner.nextLine();
-                        scanner.nextLine();
                         System.out.print("Endereço: ");
                         String endereco = scanner.nextLine();
 
@@ -65,6 +64,9 @@ public class App {
                     }
 
                     if (!carrinho.estaVazio()) {
+                        double valorTotal = carrinho.calcularTotal();
+                        System.out.println("Valor total da compra: " + valorTotal);
+
                         System.out.println("Escolha o método de pagamento:");
                         System.out.print("Número do cartão: ");
                         String numero = scanner.nextLine();
@@ -80,7 +82,6 @@ public class App {
                         int numeroParcelas = scanner.nextInt();
                         System.out.print("Valor da parcela: ");
                         double valorParcela = scanner.nextDouble();
-                        scanner.nextLine();
                         Parcela parcela = new Parcela(numeroParcelas, valorParcela);
 
                         MetodoPagamento metodoPagamento = new MetodoPagamento(cartao, parcela);
