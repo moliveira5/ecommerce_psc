@@ -2,6 +2,7 @@ package data;
 
 import java.sql.*;
 import java.util.Scanner;
+import data.resources.Database;
 
 public class GerenciadorDeProdutos {
     public void inserirProduto(Scanner scanner) {
