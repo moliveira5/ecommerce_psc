@@ -3,6 +3,8 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        Database.createTables();
+
         Scanner scanner = new Scanner(System.in);
         GerenciadorDeProdutos gerenciadorDeProdutos = new GerenciadorDeProdutos();
         Carrinho carrinho = new Carrinho();
