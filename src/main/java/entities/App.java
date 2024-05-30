@@ -1,6 +1,8 @@
-package data;
+package entities;
 import java.util.Scanner;
-import data.resources.Database;
+
+import repository.GerenciadorDeProdutos;
+import data.Database;
 
 public class App {
     public static void main(String[] args) {

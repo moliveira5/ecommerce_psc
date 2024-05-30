@@ -1,4 +1,4 @@
-package data;
+package entities;
 
 public class MetodoPagamento {
     private Cartao cartao;

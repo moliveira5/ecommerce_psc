@@ -1,4 +1,4 @@
-package data;
+package entities;
 
 public class Produto {
     private int id;

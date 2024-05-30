@@ -1,8 +1,10 @@
-package data;
+package repository;
 
 import java.sql.*;
 import java.util.Scanner;
-import data.resources.Database;
+
+import entities.Produto;
+import data.Database;
 
 public class GerenciadorDeProdutos {
     public void inserirProduto(Scanner scanner) {

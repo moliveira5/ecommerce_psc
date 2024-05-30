@@ -1,4 +1,4 @@
-package data;
+package entities;
 
 public class Parcela {
     private int numeroParcelas;
