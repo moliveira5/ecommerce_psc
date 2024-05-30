@@ -1,0 +1,11 @@
+entities/MetodoPagamento.class
+entities/Carrinho.class
+data/Database.class
+entities/Cartao.class
+entities/Produto.class
+entities/Endereco.class
+entities/Parcela.class
+entities/Cliente.class
+entities/Checkout.class
+entities/App.class
+repository/GerenciadorDeProdutos.class

@@ -1,8 +1,13 @@
-package data;
+package entities;
 import java.util.Scanner;
+
+import repository.GerenciadorDeProdutos;
+import data.Database;
 
 public class App {
     public static void main(String[] args) {
+        Database.createTables();
+
         Scanner scanner = new Scanner(System.in);
         GerenciadorDeProdutos gerenciadorDeProdutos = new GerenciadorDeProdutos();
         Carrinho carrinho = new Carrinho();

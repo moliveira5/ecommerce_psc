@@ -1,4 +1,4 @@
-package data;
+package entities;
 
 public class Checkout {
     private Carrinho carrinho;
