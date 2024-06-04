@@ -3,8 +3,7 @@ package business.settings;
 public enum MetodoPagamentoEnum {
 
     NOVO(0),
-    CARTAO(1),
-    BOLETO(2);
+    CARTAO(1);
 
     private final int valor;
 

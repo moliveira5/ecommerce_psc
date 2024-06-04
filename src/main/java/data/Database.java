@@ -71,14 +71,16 @@ public class Database {
                     + "email VARCHAR(100),"
                     + "telefone VARCHAR(20),"
                     + "endereco VARCHAR(255)"
+                    + "pagamentoCartaoNumero VARCHAR(19)"
                     + ")";
             statement.execute(createTableClientes);
 
             String createTableCartoes = "CREATE TABLE IF NOT EXISTS cartoes ("
-                    + "numero VARCHAR(16) PRIMARY KEY,"
+                    + "numero VARCHAR(19) PRIMARY KEY,"
                     + "nomeTitular VARCHAR(100),"
                     + "dataValidade VARCHAR(7),"
                     + "cvv VARCHAR(3)"
+                    + "clienteId UNIQUEIDENTIFIER"
                     + ")";
             statement.execute(createTableCartoes);
 

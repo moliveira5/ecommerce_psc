@@ -7,7 +7,7 @@ public class Cliente {
     private String email;
     private String telefone;
     private String endereco;
-    private int pagamentoCartaoId;
+    private String pagamentoCartaoNumero;
 
     public Cliente(int id, String nome, String cpf, String email, String telefone, String endereco) {
         this.id = id;

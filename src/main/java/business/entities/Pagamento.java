@@ -2,37 +2,21 @@ package business.entities;
 
 
 public class Pagamento {
-    private PagamentoCartao pagamentoCartao;
-    private PagamentoBoleto pagamentoBoleto;
+    private static Cartao pagamentoCartao;
     private Parcela parcelas;
 
-    public Pagamento(PagamentoCartao cartao, Parcela parcelas) 
+    public Pagamento(Cartao cartao, Parcela parcelas) 
     {
         this.pagamentoCartao = cartao;
         this.parcelas = parcelas;
     }
 
-    public Pagamento(PagamentoBoleto boleto, Parcela parcelas)
-    {
-        this.pagamentoBoleto = boleto;
-        this.parcelas = parcelas;
-
-    }
-
-    public PagamentoCartao getCartao() {
+    public static Cartao getCartao() {
         return pagamentoCartao;
     }
 
-    public PagamentoBoleto getBoleto() {
-        return pagamentoBoleto;
-    }
-
-    public void setCartao(PagamentoCartao cartao) {
+    public void setCartao(Cartao cartao) {
         this.pagamentoCartao = cartao;
-    }
-
-    public void setBoleto(PagamentoBoleto boleto) {
-        this.pagamentoBoleto = boleto;
     }
 
     public Parcela getParcelas() {
@@ -47,7 +31,6 @@ public class Pagamento {
     public String toString() {
         return "MetodoPagamento{" +
                 "cartao=" + pagamentoCartao +
-                "boleto=" + pagamentoBoleto +
                 ", parcelas=" + parcelas +
                 '}';
     }
