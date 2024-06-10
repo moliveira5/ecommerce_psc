@@ -50,7 +50,7 @@ public class Database {
     }
 
     public static void createTables() {
-        try (Connection connection = getConnection();
+        try (Connection connection = Database.getConnection();
              Statement statement = connection.createStatement()) {
             String createTableProdutos = "CREATE TABLE IF NOT EXISTS produtos ("
                     + "id INT AUTO_INCREMENT PRIMARY KEY,"
@@ -63,31 +63,59 @@ public class Database {
                     + "tamanho CHAR(1)"
                     + ")";
             statement.execute(createTableProdutos);
-
+    
             String createTableClientes = "CREATE TABLE IF NOT EXISTS clientes ("
                     + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "nivel INT,"
                     + "nome VARCHAR(100),"
                     + "cpf VARCHAR(14),"
                     + "email VARCHAR(100),"
-                    + "telefone VARCHAR(20),"
-                    + "endereco VARCHAR(255)"
-                    + "pagamentoCartaoNumero VARCHAR(19)"
+                    + "senha VARCHAR(100),"
+                    + "telefone VARCHAR(20)"
                     + ")";
             statement.execute(createTableClientes);
-
+    
             String createTableCartoes = "CREATE TABLE IF NOT EXISTS cartoes ("
                     + "numero VARCHAR(19) PRIMARY KEY,"
                     + "nomeTitular VARCHAR(100),"
                     + "dataValidade VARCHAR(7),"
-                    + "cvv VARCHAR(3)"
-                    + "clienteId UNIQUEIDENTIFIER"
+                    + "cvv VARCHAR(3),"
+                    + "clienteId INT,"
+                    + "FOREIGN KEY (clienteId) REFERENCES clientes(id)"
                     + ")";
             statement.execute(createTableCartoes);
+    
+            String createTableEnderecos = "CREATE TABLE IF NOT EXISTS enderecos ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "enderecoCompleto VARCHAR(255),"
+                    + "clienteId INT,"
+                    + "FOREIGN KEY (clienteId) REFERENCES clientes(id)"
+                    + ")";
+            statement.execute(createTableEnderecos);
 
+            String createTableCompras = "CREATE TABLE IF NOT EXISTS compras ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "clienteId INT,"
+                    + "dataCompra TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
+                    + "totalCompra DOUBLE,"
+                    + "FOREIGN KEY (clienteId) REFERENCES clientes(id)"
+                    + ")";
+            statement.execute(createTableCompras);
+    
+            String createTableItensCompra = "CREATE TABLE IF NOT EXISTS itens_compra ("
+                    + "compraId INT,"
+                    + "produtoId INT,"
+                    + "quantidade INT,"
+                    + "FOREIGN KEY (compraId) REFERENCES compras(id),"
+                    + "FOREIGN KEY (produtoId) REFERENCES produtos(id),"
+                    + "PRIMARY KEY (compraId, produtoId)"
+                    + ")";
+            statement.execute(createTableItensCompra);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    
 
     public static void main(String[] args) {
         createTables();

@@ -1,10 +1,19 @@
 package business.entities;
 
 public class Endereco {
+    private int id;
     private String enderecoCompleto;
 
     public Endereco(String enderecoCompleto) {
         this.enderecoCompleto = enderecoCompleto;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEnderecoCompleto() {
@@ -18,7 +27,8 @@ public class Endereco {
     @Override
     public String toString() {
         return "Endereco{" +
-                "enderecoCompleto='" + enderecoCompleto + '\'' +
+                "id=" + id +
+                ", enderecoCompleto='" + enderecoCompleto + '\'' +
                 '}';
     }
 }

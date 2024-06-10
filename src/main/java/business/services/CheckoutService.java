@@ -2,17 +2,20 @@ package business.services;
 
 import java.util.Scanner;
 
-import javax.management.InvalidApplicationException;
-
 import business.entities.Carrinho;
 import business.entities.Checkout;
 import business.entities.Cliente;
+import business.entities.Compra;
 import business.entities.Endereco;
 import business.entities.Pagamento;
 import business.entities.Cartao;
 import business.entities.Parcela;
+import business.entities.Produto;
 import business.settings.MetodoPagamentoEnum;
 import data.repository.GerenciadorDeCliente;
+import data.repository.GerenciadorDeCompras;
+import data.repository.GerenciadorDeEndereco;
+import data.repository.GerenciadorDePagamento;
 
 public class CheckoutService {
 
@@ -23,52 +26,60 @@ public class CheckoutService {
         Cliente clienteAtual = DefinirClienteDaCompra(scanner, email);
 
         if (!carrinho.estaVazio()) {
-            carrinho.listarProdutos();
+            carrinho.listarProdutosDetalhado();
+
             double valorTotal = carrinho.calcularTotal();
             System.out.println("\nValor total da compra: " + valorTotal);
 
             Pagamento metodoPagamento = DefinirMetodoDePagamento(scanner, clienteAtual.getId());
 
-
             Checkout checkout = new Checkout(carrinho, clienteAtual, metodoPagamento);
             checkout.finalizarCompra();
+
+            GerenciadorDeCompras gerenciadorDeCompras = new GerenciadorDeCompras();
+            Compra novaCompra = new Compra(0, clienteAtual.getId(), null, valorTotal);
+            gerenciadorDeCompras.inserirCompra(novaCompra);
+
+            // carrinho.getItens().forEach(produto -> {
+            //     int quantidade = carrinho.contarQuantidadePorId(produto.getId());
+
+            //     gerenciadorDeCompras.inserirItemCompra(novaCompra.getId(), produto.getId(), quantidade);
+            // });
+
             carrinho.limparCarrinho();
         } else {
             System.out.println("Carrinho vazio. Adicione produtos ao carrinho antes de finalizar a compra.");
         }
     }
 
-    public Cliente DefinirClienteDaCompra (Scanner scanner, String emailCliente)
+    public Cliente DefinirClienteDaCompra(Scanner scanner, String emailCliente)
     {
         GerenciadorDeCliente gerenciadorDeCliente = new GerenciadorDeCliente();
 
-        Cliente clienteAtual = gerenciadorDeCliente.ObterPorEmail(emailCliente);
+        Cliente clienteAtual = gerenciadorDeCliente.obterPorEmail(emailCliente);
 
         if (clienteAtual == null) {
-            System.out.print("Informe seu nome: ");
-            String nome = scanner.nextLine();
-            System.out.print("CPF: ");
-            String cpf = scanner.nextLine();
-            System.out.print("Email: ");
-            String email = scanner.nextLine();
-            System.out.print("Telefone: ");
-            String telefone = scanner.nextLine();
-            System.out.print("Endereço: ");
-            String endereco = scanner.nextLine();
+            ClientesService clientesService = new ClientesService();
+            clienteAtual = clientesService.criarConta(scanner, gerenciadorDeCliente, emailCliente);
 
-            clienteAtual = new Cliente(0, nome, cpf, email, telefone, new Endereco(endereco).toString());
+            System.out.print("Endereço: ");
+            String enderecoStr = scanner.nextLine();
+
+            Endereco endereco = new Endereco(enderecoStr);
+            GerenciadorDeEndereco gerenciadorDeEndereco = new GerenciadorDeEndereco();
+            gerenciadorDeEndereco.inserirEndereco(endereco, clienteAtual.getId());
         }
 
         return clienteAtual;
     }
 
-    public Pagamento DefinirMetodoDePagamento (Scanner scanner, int clienteId)
-    {
+    public Pagamento DefinirMetodoDePagamento(Scanner scanner, int clienteId) {
         System.out.println("Escolha o método de pagamento:");
         System.out.println("0 - Cadastrar novo cartão");
         System.out.println("1 - Cartão");
         System.out.println("2 - Boleto");
         int metodoPagamento = scanner.nextInt();
+        scanner.nextLine();
 
         CartaoService cartao = new CartaoService();
 
@@ -115,12 +126,6 @@ public class CheckoutService {
         else 
             return null;
             //InvalidApplicationException("Método de Pagamento Inválido!");
-
-
-
         return null;
     }
-
-
-    
 }

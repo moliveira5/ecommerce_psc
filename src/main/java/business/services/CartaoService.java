@@ -3,6 +3,7 @@ package business.services;
 import java.util.Scanner;
 
 import business.entities.Cartao;
+import data.repository.GerenciadorDeCliente;
 import data.repository.GerenciadorDePagamento;
 
 public class CartaoService {

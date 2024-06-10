@@ -2,24 +2,37 @@ package business.entities;
 
 public class Cliente {
     private int id;
+    private int nivel;
     private String nome;
     private String cpf;
     private String email;
     private String telefone;
-    private String endereco;
-    private String pagamentoCartaoNumero;
+    private String senha;
 
-    public Cliente(int id, String nome, String cpf, String email, String telefone, String endereco) {
+    public Cliente(int id, int nivel, String nome, String cpf, String email, String telefone, String senha) {
         this.id = id;
+        this.nivel = nivel;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.telefone = telefone;
-        this.endereco = endereco;
+        this.senha = senha;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
     }
 
     public String getNome() {
@@ -54,23 +67,24 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     @Override
     public String toString() {
         return "Cliente{" +
                 "id=" + id +
+                ", nivel=" + nivel +
                 ", nome='" + nome + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", email='" + email + '\'' +
-                ", telefone=" + telefone +
-                ", endereco=" + endereco +
+                ", telefone='" + telefone + '\'' +
+                ", senha='" + senha + '\'' +
                 '}';
     }
 }
