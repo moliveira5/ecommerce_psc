@@ -1,0 +1,7 @@
+INSERT INTO loja_esportes.clientes 
+VALUES
+(NULL, 0, 'Marina Guimarães', '217.890.027-75', 'marina.guimaraes@gmail.com', '00000000', '(31) 99999-9990'),
+(NULL, 0, 'Victor Iki', '328.901.138-86', 'victor.iki@gmail.com', '11111111', '(31) 99999-9991'),
+(NULL, 0, 'Giulia Huguinim', '439.012.249-97', 'giulia.huguinim@gmail.com', '22222222', '(31) 99999-9992'),
+(NULL, 0, 'João Rodrigues', '540.123.350-08', 'joao.rodrigues@gmail.com', '33333333', '(31) 99999-9993'),
+(NULL, 0, 'Felipe Tavares', '651.234.461-19', 'felipe.tavares@gmail.com', '44444444', '(31) 99999-9994');

@@ -1,0 +1,8 @@
+INSERT INTO loja_esportes.itens_compra 
+VALUES
+(1, 21, 1),
+(1, 11, 2),
+(1, 32, 1),
+(2, 27, 2),
+(2, 42, 2),
+(3, 43, 1);

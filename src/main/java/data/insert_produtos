@@ -1,4 +1,4 @@
-INSERT INTO produtos 
+INSERT INTO loja_esportes.produtos 
 VALUES
 (NULL, 'Camisa Corinthians Nike', 'Corinthians I 2023/24 Torcedor', 'Camisa', 'Nike', 299.00, NULL, 'M'),
 (NULL, 'Camisa Corinthians Nike', 'Corinthians I 2023/24 Torcedor', 'Camisa', 'Nike', 299.00, NULL, 'P'),
