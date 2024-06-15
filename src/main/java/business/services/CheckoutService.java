@@ -6,126 +6,125 @@ import business.entities.Carrinho;
 import business.entities.Checkout;
 import business.entities.Cliente;
 import business.entities.Compra;
-import business.entities.Endereco;
 import business.entities.Pagamento;
 import business.entities.Cartao;
 import business.entities.Parcela;
-import business.entities.Produto;
 import business.settings.MetodoPagamentoEnum;
-import data.repository.GerenciadorDeCliente;
+import business.settings.OpcaoCartaoEnum;
 import data.repository.GerenciadorDeCompras;
-import data.repository.GerenciadorDeEndereco;
-import data.repository.GerenciadorDePagamento;
 
 public class CheckoutService {
 
-    public void FazerCheckout(Scanner scanner, Carrinho carrinho)
+    public void FazerCheckout(Scanner scanner, Carrinho carrinho, Cliente clienteAtual)
     {
-        System.out.print("Informe seu email: ");
-        String email = scanner.nextLine().toLowerCase();
-        Cliente clienteAtual = DefinirClienteDaCompra(scanner, email);
+        ClientesService clientesService = new ClientesService();
 
-        if (!carrinho.estaVazio()) {
+        if(clienteAtual.getNome() == "Visitante")
+        {
+            do
+            {
+                clienteAtual = clientesService.Loggin(scanner);
+            } while(clienteAtual == null);
+        }
+            
+
+        if (clienteAtual != null) {
             carrinho.listarProdutosDetalhado();
 
             double valorTotal = carrinho.calcularTotal();
             System.out.println("\nValor total da compra: " + valorTotal);
 
-            Pagamento metodoPagamento = DefinirMetodoDePagamento(scanner, clienteAtual.getId());
+            Cartao cartao = DefinirCartaoParaPagamento(scanner, clienteAtual.getId());
 
-            Checkout checkout = new Checkout(carrinho, clienteAtual, metodoPagamento);
+            Pagamento pagamento = DefinirPagamento(scanner, clienteAtual.getId(), cartao, valorTotal);
+
+            Checkout checkout = new Checkout(carrinho, clienteAtual, pagamento);
             checkout.finalizarCompra();
 
             GerenciadorDeCompras gerenciadorDeCompras = new GerenciadorDeCompras();
             Compra novaCompra = new Compra(0, clienteAtual.getId(), null, valorTotal);
+
             gerenciadorDeCompras.inserirCompra(novaCompra);
 
-            // carrinho.getItens().forEach(produto -> {
-            //     int quantidade = carrinho.contarQuantidadePorId(produto.getId());
+            carrinho.getItens().forEach(produto -> {
+                int quantidade = carrinho.contarQuantidadePorId(produto.getId());
 
-            //     gerenciadorDeCompras.inserirItemCompra(novaCompra.getId(), produto.getId(), quantidade);
-            // });
+                gerenciadorDeCompras.inserirItemCompra(novaCompra.getId(), produto.getId(), quantidade);
+            });
 
             carrinho.limparCarrinho();
-        } else {
-            System.out.println("Carrinho vazio. Adicione produtos ao carrinho antes de finalizar a compra.");
-        }
+        } 
     }
 
-    public Cliente DefinirClienteDaCompra(Scanner scanner, String emailCliente)
+    public Cartao DefinirCartaoParaPagamento(Scanner scanner, int clienteId)
     {
-        GerenciadorDeCliente gerenciadorDeCliente = new GerenciadorDeCliente();
-
-        Cliente clienteAtual = gerenciadorDeCliente.obterPorEmail(emailCliente);
-
-        if (clienteAtual == null) {
-            ClientesService clientesService = new ClientesService();
-            clienteAtual = clientesService.criarConta(scanner, gerenciadorDeCliente, emailCliente);
-
-            System.out.print("Endereço: ");
-            String enderecoStr = scanner.nextLine();
-
-            Endereco endereco = new Endereco(enderecoStr);
-            GerenciadorDeEndereco gerenciadorDeEndereco = new GerenciadorDeEndereco();
-            gerenciadorDeEndereco.inserirEndereco(endereco, clienteAtual.getId());
-        }
-
-        return clienteAtual;
-    }
-
-    public Pagamento DefinirMetodoDePagamento(Scanner scanner, int clienteId) {
         System.out.println("Escolha o método de pagamento:");
-        System.out.println("0 - Cadastrar novo cartão");
+        System.out.println("0 - Novo cartão");
         System.out.println("1 - Cartão");
-        System.out.println("2 - Boleto");
-        int metodoPagamento = scanner.nextInt();
+        int opcao = scanner.nextInt();
         scanner.nextLine();
 
-        CartaoService cartao = new CartaoService();
+        CartaoService cartaoService = new CartaoService();
+        Cartao dadosCartao = null;
 
-        if (metodoPagamento == MetodoPagamentoEnum.NOVO.getValor())
+        if (opcao == OpcaoCartaoEnum.NOVO.getValor())
         {
-            Cartao dadosCartao = cartao.CadastrarNovoPagamentoCartao(scanner, clienteId);
-
-            System.out.print("Número de parcelas: ");
-            int numeroParcelas = scanner.nextInt();
-            System.out.print("Valor da parcela: ");
-            double valorParcela = scanner.nextDouble();
-            Parcela parcela = new Parcela(numeroParcelas, valorParcela);
-
-            return new Pagamento(dadosCartao, parcela);
+            dadosCartao = cartaoService.CadastrarNovoPagamentoCartao(scanner, clienteId);
         }
-        else if (metodoPagamento == MetodoPagamentoEnum.CARTAO.getValor())
+        else if (opcao == OpcaoCartaoEnum.EXISTENTE.getValor())
         {
-            Cartao pagamentoCartao = cartao.ObterCartaoPorClienteId(clienteId);
-            System.out.println(pagamentoCartao.toString());
-            System.out.println("\n Deseja usar esse método de pagamento? (S/N)");
-            Character inputUsuario = scanner.next().charAt(0);
-            while (inputUsuario != 'S' && inputUsuario != 'N') {
-                System.out.print("Utilize S ou N para confirmar o método de pagamento: ");
-                inputUsuario = scanner.next().charAt(0);
-            }
-
-            if (inputUsuario == 'N')
-            {
-                cartao.CadastrarNovoPagamentoCartao(scanner, clienteId);
-            }
-            else
-            {
-                System.out.print("Número de parcelas: ");
-                int numeroParcelas = scanner.nextInt();
-                System.out.print("Valor da parcela: ");
-                double valorParcela = scanner.nextDouble();
-                Parcela parcela = new Parcela(numeroParcelas, valorParcela);
-
-                return new Pagamento(pagamentoCartao, parcela);
-            }
-
-
+            dadosCartao = cartaoService.ObterCartaoPorClienteId(clienteId);
+            System.out.println(dadosCartao.getNumero() + "|" + dadosCartao.getNomeTitular());
         }
         else 
-            return null;
-            //InvalidApplicationException("Método de Pagamento Inválido!");
-        return null;
+        {
+            System.out.println("Opção inválida. Tente novamente:");
+            DefinirCartaoParaPagamento(scanner, clienteId);
+        }
+            
+        return dadosCartao;
+    }
+
+    public Pagamento DefinirPagamento(Scanner scanner, int clienteId, Cartao cartao, double valorTotalCompra) {
+
+        System.out.println("\nEscolha a forma de pagamento:");
+        System.out.println("0 - A Vista");
+        System.out.println("1 - Parcelado");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        Parcela parcela = null;
+        double valorParcela = 0;
+        double valorParcelaMinima = 50.0;
+        int maximoParcelasPermitido = 12;
+
+        if (opcao == MetodoPagamentoEnum.PARCELADO.getValor())
+        {
+            int maximoParcelas = (int)(valorTotalCompra / valorParcelaMinima);
+
+            if (maximoParcelas > maximoParcelasPermitido)
+               maximoParcelas = maximoParcelasPermitido;
+
+            System.out.println("\nNúmero máximo de parcelas para o valor da compra: " + maximoParcelas);
+
+            System.out.println("Deseja parcelar a compra em quantas vezes?");
+            int numeroParcelas = scanner.nextInt();
+
+            while(numeroParcelas > maximoParcelas || numeroParcelas == 0)
+            {
+                System.out.println("Valor inválido, informe a quantidade de parcelas novamente: ");
+                numeroParcelas = scanner.nextInt();
+            }
+
+            valorParcela = valorTotalCompra / numeroParcelas;
+
+            parcela = new Parcela(numeroParcelas, valorParcela);
+        }
+        else
+        {
+            parcela = new Parcela(MetodoPagamentoEnum.AVISTA.getValor(), valorTotalCompra);
+        }
+
+        return new Pagamento(cartao, parcela);
     }
 }

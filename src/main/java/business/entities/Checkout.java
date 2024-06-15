@@ -14,8 +14,5 @@ public class Checkout {
     public void finalizarCompra() {
         
         System.out.println("Compra finalizada com sucesso!");
-        System.out.println("Cliente: " + cliente);
-        System.out.println("Carrinho: " + carrinho);
-        System.out.println("Método de Pagamento: " + metodoPagamento);
     }
 }

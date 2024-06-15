@@ -38,39 +38,7 @@ public class App {
         Cliente clienteAtual = null;
 
         while (clienteAtual == null) {
-            System.out.println("Menu de Login:");
-            System.out.println("1. Login");
-            System.out.println("2. Criar Conta");
-            System.out.println("3. Seguir sem Login");
-            System.out.print("Escolha uma opção: ");
-            int opcaoLogin = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (opcaoLogin) {
-                case 1:
-                    System.out.print("Email: ");
-                    String emailLogin = scanner.nextLine();
-                    System.out.print("Senha: ");
-                    String senhaLogin = scanner.nextLine();
-                    clienteAtual = gerenciadorDeCliente.obterPorEmail(emailLogin);
-                    if (clienteAtual != null && clienteAtual.getSenha().equals(senhaLogin)) {
-                        System.out.println("Login realizado com sucesso.");
-                    } else {
-                        System.out.println("Email ou senha incorretos.");
-                        clienteAtual = null;
-                    }
-                    break;
-                case 2:
-                    clienteAtual = clientesService.criarConta(scanner, gerenciadorDeCliente, null);
-                    break;
-                case 3:
-                    System.out.println("Seguindo sem login.");
-                    clienteAtual = new Cliente(0, 0, "Visitante", "", "", "", "");
-                    break;
-                default:
-                    System.out.println("Opção inválida.");
-                    break;
-            }
+            clienteAtual = clientesService.Loggin(scanner);
         }
 
         if (clienteAtual.getId() != 0) {
@@ -131,7 +99,7 @@ public class App {
                     break;
                 case 6:
                     if (!carrinho.estaVazio()) {
-                        checkout.FazerCheckout(scanner, carrinho);
+                        checkout.FazerCheckout(scanner, carrinho, clienteAtual);
                     } else {
                         System.out.println("Carrinho vazio.");
                     }
@@ -192,9 +160,9 @@ public class App {
                     break;
                 case 4:
                     if (!carrinho.estaVazio()) {
-                        checkout.FazerCheckout(scanner, carrinho);
+                        checkout.FazerCheckout(scanner, carrinho, clienteAtual);
                     } else {
-                        System.out.println("Carrinho vazio.");
+                        System.out.println("Carrinho vazio. Adicione produtos antes de fazer checkout.");
                     }
                     break;
                 case 5:
