@@ -62,7 +62,7 @@ Sistema de compras online desenvolvido em Java. O sistema simula funcionalidades
 ### 4. Implementar Recomendações de Produtos
    - Desenvolver um sistema de recomendação de produtos que utilize o histórico de compras dos clientes ou algoritmos de filtragem colaborativa para sugerir produtos relevantes aos usuários.
 
-### 5. Melhorar o Sistema de Busca de Produtos
+### 5. Melhorar a Busca de Produtos
    - Aprimorar a funcionalidade de busca de produtos com opções avançadas de filtragem, como pesquisa por categoria, faixa de preço, avaliações dos clientes, entre outros critérios.
 
 ### 6. Implementar Testes Automatizados
@@ -73,10 +73,9 @@ Sistema de compras online desenvolvido em Java. O sistema simula funcionalidades
 
 ### 8. Implementar Recursos de Notificação
    - Adicionar notificações por e-mail ou SMS para atualizações de status de pedidos, promoções especiais, lembretes de carrinho abandonado, entre outras comunicações relevantes.
-izar revisões e otimizações no código para melhorar o desempenho do sistema, garantindo que ele possa lidar com um aumento no número de usuários e transações.
 
 ### 10. Adicionar Funcionalidades de Assinatura e Promoções
-   - Implementar um sistema de assinatura para produtos recorrentes ou serviços premium, além de permitir a aplicação de cupons de desconto e promoções especiais para incentivar vendas.
+   - Implementar um sistema de assinatura para serviços premium, além de permitir a aplicação de cupons de desconto e promoções especiais para incentivar vendas.
 
 ### 11. Internacionalização e Localização
    - Suportar múltiplos idiomas e moedas para atender a uma base de clientes global, adaptando o sistema para diferentes regiões e culturas.
