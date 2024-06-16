@@ -12,10 +12,11 @@ public class ClientesService {
     /**
      * Realiza o processo de login de um cliente.
      *
-     * @param scanner Scanner para ler entrada do usuário.
+     * @param scanner       Scanner para ler entrada do usuário.
+     * @param WithtNotLogin Boolean para verificar se pode seguir sem login.
      * @return Cliente logado, ou null se o login falhar.
      */
-    public Cliente Loggin(Scanner scanner)
+    public Cliente Loggin(Scanner scanner, boolean WithtNotLogin)
     {
         GerenciadorDeCliente gerenciadorDeCliente = new GerenciadorDeCliente();
         Console con = System.console(); 
@@ -23,7 +24,7 @@ public class ClientesService {
         System.out.println("Menu de Login:");
         System.out.println("1. Login");
         System.out.println("2. Criar Conta");
-        System.out.println("3. Seguir sem Login");
+        if (WithtNotLogin) System.out.println("3. Seguir sem Login");
         System.out.print("Escolha uma opção: ");
         int opcaoLogin = scanner.nextInt();
         scanner.nextLine();
@@ -49,9 +50,14 @@ public class ClientesService {
                 clienteAtual = criarConta(scanner, gerenciadorDeCliente, null);
                 break;
             case 3:
+            if (WithtNotLogin) {
                 System.out.println("Seguindo sem login.");
                 clienteAtual = new Cliente(0, 0, "Visitante", "", "", "", "");
                 break;
+            } else {
+                System.out.println("Opção inválida.");
+                break;
+            }
             default:
                 System.out.println("Opção inválida.");
                 break;

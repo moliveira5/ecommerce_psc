@@ -23,7 +23,7 @@ public class CheckoutService {
      * @param carrinho     Carrinho contendo os produtos para a compra.
      * @param clienteAtual Cliente que está realizando a compra.
      */
-    public void FazerCheckout(Scanner scanner, Carrinho carrinho, Cliente clienteAtual)
+    public Cliente FazerCheckout(Scanner scanner, Carrinho carrinho, Cliente clienteAtual)
     {
         ClientesService clientesService = new ClientesService();
 
@@ -31,7 +31,7 @@ public class CheckoutService {
         {
             do
             {
-                clienteAtual = clientesService.Loggin(scanner);
+                clienteAtual = clientesService.Loggin(scanner, false);
             } while(clienteAtual == null);
         }
             
@@ -61,7 +61,9 @@ public class CheckoutService {
             });
 
             carrinho.limparCarrinho();
-        } 
+        }
+        
+        return clienteAtual;
     }
 
     /**
@@ -89,6 +91,13 @@ public class CheckoutService {
         else if (opcao == OpcaoCartaoEnum.EXISTENTE.getValor())
         {
             dadosCartao = cartaoService.ObterCartaoPorClienteId(clienteId);
+
+            if (dadosCartao == null)
+            {
+                System.out.println("Nenhum cartão cadastrado. Cadastre um novo cartão.");
+                dadosCartao = cartaoService.CadastrarNovoPagamentoCartao(scanner, clienteId);
+            }
+
             System.out.println(dadosCartao.getNumero() + "|" + dadosCartao.getNomeTitular());
         }
         else 

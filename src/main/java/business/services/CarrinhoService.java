@@ -62,7 +62,7 @@ public class CarrinhoService {
 
         while(removerProduto)
         {
-            System.out.print("Código do produto a remover do carrinho: ");
+            System.out.print("Id do produto a remover do carrinho: ");
             int produtoId = scanner.nextInt();
             scanner.nextLine();
 
@@ -97,9 +97,9 @@ public class CarrinhoService {
      */
     public Produto ObterProduto (Carrinho carrinho, int produtoId)
     {
-        carrinho.listarProdutos();
+        Produto produto = carrinho.buscarProdutoPorId(produtoId);
 
-        return null;
+        return produto == null ? null : produto;
     }
 
 

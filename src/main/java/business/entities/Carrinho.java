@@ -35,6 +35,21 @@ public class Carrinho {
     }
 
     /**
+     * Busca um produto pelo seu ID no carrinho.
+     *
+     * @param produtoId ID do produto a ser buscado.
+     * @return O produto encontrado no carrinho ou null se não encontrado.
+     */
+    public Produto buscarProdutoPorId(int produtoId) {
+        for (Produto produto : produtos) {
+            if (produto.getId() == produtoId) {
+                return produto;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Remove um produto do carrinho.
      *
      * @param produto O produto a ser removido.
