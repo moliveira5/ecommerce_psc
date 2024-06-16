@@ -1,14 +1,21 @@
 package business.services;
 
-import java.util.ArrayList;
 import java.util.Scanner;
-
 import business.entities.Carrinho;
 import business.entities.Produto;
 import data.repository.GerenciadorDeProdutos;
 
+/**
+ * Serviço responsável por gerenciar operações no carrinho de compras.
+ */
 public class CarrinhoService {
-
+    /**
+     * Permite adicionar produtos ao carrinho.
+     *
+     * @param scanner   Scanner para ler entrada do usuário.
+     * @param carrinho  Carrinho onde os produtos serão adicionados.
+     * @param produtos  Gerenciador de produtos para obter informações dos produtos.
+     */
     public void AdicionarProduto(Scanner scanner, Carrinho carrinho, GerenciadorDeProdutos produtos){
         boolean adicionarProduto = true;
 
@@ -41,6 +48,13 @@ public class CarrinhoService {
         
     }
 
+    /**
+     * Permite remover produtos do carrinho.
+     *
+     * @param scanner   Scanner para ler entrada do usuário.
+     * @param carrinho  Carrinho de onde os produtos serão removidos.
+     * @param produtos  Gerenciador de produtos para obter informações dos produtos.
+     */
     public void RemoverProduto(Scanner scanner, Carrinho carrinho, GerenciadorDeProdutos produtos)
     {
 
@@ -48,7 +62,7 @@ public class CarrinhoService {
 
         while(removerProduto)
         {
-            System.out.print("Código do produto a remover do carrinho: ");
+            System.out.print("Id do produto a remover do carrinho: ");
             int produtoId = scanner.nextInt();
             scanner.nextLine();
 
@@ -74,11 +88,18 @@ public class CarrinhoService {
 
     }
 
+    /**
+     * Obtém um produto do carrinho pelo seu ID.
+     *
+     * @param carrinho   Carrinho onde buscar o produto.
+     * @param produtoId  ID do produto a ser obtido.
+     * @return Produto encontrado no carrinho ou null se não encontrado.
+     */
     public Produto ObterProduto (Carrinho carrinho, int produtoId)
     {
-        carrinho.listarProdutos();
+        Produto produto = carrinho.buscarProdutoPorId(produtoId);
 
-        return null;
+        return produto == null ? null : produto;
     }
 
 

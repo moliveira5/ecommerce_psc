@@ -3,12 +3,20 @@ package business.services;
 import java.util.Scanner;
 import business.entities.Cliente;
 import business.entities.Compra;
-import business.entities.CompraItem;
-import data.repository.GerenciadorDeCliente;
 import data.repository.GerenciadorDeCompras;
 
+/**
+ * Serviço responsável por operações relacionadas a compras.
+ */
 public class ComprasService {
-
+    /**
+     * Realiza uma nova compra para o cliente especificado.
+     *
+     * @param scanner             Scanner para ler entrada do usuário.
+     * @param gerenciadorDeCompras Gerenciador de compras para realizar operações no banco de dados.
+     * @param cliente             Cliente que está realizando a compra.
+     * @return O objeto Compra criado e inserido no banco de dados.
+     */
     public Compra realizarCompra(Scanner scanner, GerenciadorDeCompras gerenciadorDeCompras, Cliente cliente) {
         System.out.print("Total da Compra: ");
         double totalCompra = scanner.nextDouble();
@@ -33,6 +41,13 @@ public class ComprasService {
         return novaCompra;
     }
 
+    /**
+     * Lista todas as compras realizadas pelo cliente especificado.
+     *
+     * @param scanner             Scanner para ler entrada do usuário.
+     * @param gerenciadorDeCompras Gerenciador de compras para realizar operações no banco de dados.
+     * @param cliente             Cliente do qual as compras serão listadas.
+     */
     public void listarComprasPorCliente(Scanner scanner, GerenciadorDeCompras gerenciadorDeCompras, Cliente cliente) {
         System.out.println("Compras do cliente: " + cliente.getNome());
         gerenciadorDeCompras.listarComprasPorCliente(cliente.getId());

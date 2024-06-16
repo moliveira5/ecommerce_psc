@@ -1,7 +1,6 @@
 package business.services;
 
 import java.util.Scanner;
-
 import business.entities.Carrinho;
 import business.entities.Checkout;
 import business.entities.Cliente;
@@ -13,9 +12,18 @@ import business.settings.MetodoPagamentoEnum;
 import business.settings.OpcaoCartaoEnum;
 import data.repository.GerenciadorDeCompras;
 
+/**
+ * Serviço responsável por gerenciar o processo de checkout de uma compra.
+ */
 public class CheckoutService {
-
-    public void FazerCheckout(Scanner scanner, Carrinho carrinho, Cliente clienteAtual)
+    /**
+     * Realiza o processo de checkout da compra.
+     *
+     * @param scanner      Scanner para ler entrada do usuário.
+     * @param carrinho     Carrinho contendo os produtos para a compra.
+     * @param clienteAtual Cliente que está realizando a compra.
+     */
+    public Cliente FazerCheckout(Scanner scanner, Carrinho carrinho, Cliente clienteAtual)
     {
         ClientesService clientesService = new ClientesService();
 
@@ -23,7 +31,7 @@ public class CheckoutService {
         {
             do
             {
-                clienteAtual = clientesService.Loggin(scanner);
+                clienteAtual = clientesService.Loggin(scanner, false);
             } while(clienteAtual == null);
         }
             
@@ -53,9 +61,18 @@ public class CheckoutService {
             });
 
             carrinho.limparCarrinho();
-        } 
+        }
+        
+        return clienteAtual;
     }
 
+    /**
+     * Define qual cartão será utilizado para o pagamento.
+     *
+     * @param scanner   Scanner para ler entrada do usuário.
+     * @param clienteId ID do cliente que está realizando a compra.
+     * @return Cartão escolhido para o pagamento.
+     */
     public Cartao DefinirCartaoParaPagamento(Scanner scanner, int clienteId)
     {
         System.out.println("Escolha o método de pagamento:");
@@ -74,6 +91,13 @@ public class CheckoutService {
         else if (opcao == OpcaoCartaoEnum.EXISTENTE.getValor())
         {
             dadosCartao = cartaoService.ObterCartaoPorClienteId(clienteId);
+
+            if (dadosCartao == null)
+            {
+                System.out.println("Nenhum cartão cadastrado. Cadastre um novo cartão.");
+                dadosCartao = cartaoService.CadastrarNovoPagamentoCartao(scanner, clienteId);
+            }
+
             System.out.println(dadosCartao.getNumero() + "|" + dadosCartao.getNomeTitular());
         }
         else 
@@ -85,6 +109,15 @@ public class CheckoutService {
         return dadosCartao;
     }
 
+    /**
+     * Define as opções de pagamento (à vista ou parcelado) e calcula as parcelas.
+     *
+     * @param scanner           Scanner para ler entrada do usuário.
+     * @param clienteId         ID do cliente que está realizando a compra.
+     * @param cartao            Cartão escolhido para o pagamento.
+     * @param valorTotalCompra  Valor total da compra.
+     * @return Pagamento definido com o método e parcelamento escolhidos.
+     */
     public Pagamento DefinirPagamento(Scanner scanner, int clienteId, Cartao cartao, double valorTotalCompra) {
 
         System.out.println("\nEscolha a forma de pagamento:");
