@@ -1,6 +1,5 @@
 package business.services;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import business.entities.Carrinho;

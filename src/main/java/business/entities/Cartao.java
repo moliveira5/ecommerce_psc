@@ -5,7 +5,6 @@ public class Cartao {
     private String nomeTitular;
     private String dataValidade;
     private String cvv;
-    private int clienteId;
 
     public Cartao(String numero, String nomeTitular, String dataValidade, String cvv) {
         this.numero = numero;

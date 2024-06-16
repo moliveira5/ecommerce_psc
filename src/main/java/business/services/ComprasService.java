@@ -3,8 +3,6 @@ package business.services;
 import java.util.Scanner;
 import business.entities.Cliente;
 import business.entities.Compra;
-import business.entities.CompraItem;
-import data.repository.GerenciadorDeCliente;
 import data.repository.GerenciadorDeCompras;
 
 public class ComprasService {

@@ -1,6 +1,5 @@
 package business.entities;
 
-
 public class Pagamento {
     private static Cartao pagamentoCartao;
     private Parcela parcelas;
