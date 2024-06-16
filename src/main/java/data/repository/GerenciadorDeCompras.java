@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import business.entities.Compra;
 import data.Database;
 
@@ -75,15 +77,18 @@ public class GerenciadorDeCompras {
                         return;
                     }
 
-                    String leftAlignFormat = "| %-4d | %-20s | %-15.2f |%n";
+                    String leftAlignFormat = "| %-4d | %-20s | %-15.2f  |%n";
                     System.out.format("+------+----------------------+------------------+%n");
                     System.out.format("| ID   | Data da Compra       | Total da Compra  |%n");
                     System.out.format("+------+----------------------+------------------+%n");
 
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                     while (rs.next()) {
+                        Timestamp dataCompra = rs.getTimestamp("dataCompra");
+                        String dataCompraFormatada = dateFormat.format(dataCompra);
                         System.out.format(leftAlignFormat,
                                 rs.getInt("id"),
-                                rs.getTimestamp("dataCompra"),
+                                dataCompraFormatada,
                                 rs.getDouble("totalCompra"));
                     }
 

@@ -100,26 +100,37 @@ public class Carrinho {
      * Lista os produtos no carrinho com detalhes, incluindo quantidade de cada produto.
      */
     public void listarProdutosDetalhado() {
-        String leftAlignFormat = "| %-4d | %-20s | %-10s | %-15s | %-10s | %-10.2f | %-15d | %-7s | %-10d |%n";
-        System.out.format("+------+----------------------+------------+-----------------+------------+------------+-----------------+---------+------------+%n");
-        System.out.format("| ID   | Nome                 | Modelo     | Categoria       | Marca      | Preço      | Tamanho Numérico| Tamanho | Quantidade |%n");
-        System.out.format("+------+----------------------+------------+-----------------+------------+------------+-----------------+---------+------------+%n");
-
+        String leftAlignFormat = "| %-4d | %-20s | %-20s | %-15s | %-10s | %-10.2f | %-15d | %-7s | %-10d |%n";
+        System.out.format("+------+----------------------+----------------------+-----------------+------------+------------+-----------------+---------+------------+%n");
+        System.out.format("| ID   | Nome                 | Modelo               | Categoria       | Marca      | Preço      | Tamanho Numérico| Tamanho | Quantidade |%n");
+        System.out.format("+------+----------------------+----------------------+-----------------+------------+------------+-----------------+---------+------------+%n");
+    
         produtos.stream().distinct().forEach(produto -> {
             int quantidade = contarQuantidade(produto);
             System.out.format(leftAlignFormat,
                     produto.getId(),
-                    produto.getNome(),
-                    produto.getModelo(),
-                    produto.getCategoria(),
+                    truncate(produto.getNome(), 20),
+                    truncate(produto.getModelo(), 20),
+                    truncate(produto.getCategoria(), 15),
                     produto.getMarca(),
                     produto.getPreco(),
                     produto.getTamanhoNumerico(),
                     produto.getTamanho(),
                     quantidade);
         });
-
-        System.out.format("+------+----------------------+------------+-----------------+------------+------------+-----------------+---------+------------+%n");
+    
+        System.out.format("+------+----------------------+----------------------+-----------------+------------+------------+-----------------+---------+------------+%n");
+    }
+    
+    /**
+     * Ajusta o tamanho do texto para ocupar tamanho das colunas corretamente.
+     */
+    private String truncate(String text, int maxLength) {
+        if (text.length() <= maxLength) {
+            return text;
+        } else {
+            return text.substring(0, maxLength - 3) + "...";
+        }
     }
 
     /**

@@ -124,28 +124,39 @@ public class GerenciadorDeProdutos {
             String sql = "SELECT * FROM produtos";
             try (Statement stmt = connection.createStatement();
                  ResultSet rs = stmt.executeQuery(sql)) {
-
-                String leftAlignFormat = "| %-4d | %-20s | %-10s | %-15s | %-10s | %-10.2f | %-15d | %-7s |%n";
-                System.out.format("+------+----------------------+------------+-----------------+------------+------------+-----------------+---------+%n");
-                System.out.format("| ID   | Nome                 | Modelo     | Categoria       | Marca      | Preço      | Tamanho Numérico| Tamanho |%n");
-                System.out.format("+------+----------------------+------------+-----------------+------------+------------+-----------------+---------+%n");
-
+    
+                String leftAlignFormat = "| %-4d | %-20s | %-20s | %-15s | %-10s | %-10.2f | %-15d | %-7s |%n";
+                System.out.format("+------+----------------------+----------------------+-----------------+------------+------------+-----------------+---------+%n");
+                System.out.format("| ID   | Nome                 | Modelo               | Categoria       | Marca      | Preço      | Tamanho Numérico| Tamanho |%n");
+                System.out.format("+------+----------------------+----------------------+-----------------+------------+------------+-----------------+---------+%n");
+    
                 while (rs.next()) {
                     System.out.format(leftAlignFormat,
                             rs.getInt("id"),
-                            rs.getString("nome"),
-                            rs.getString("modelo"),
-                            rs.getString("categoria"),
+                            truncate(rs.getString("nome"), 20),
+                            truncate(rs.getString("modelo"), 20),
+                            truncate(rs.getString("categoria"), 15),
                             rs.getString("marca"),
                             rs.getDouble("preco"),
                             rs.getInt("tamanhoNumerico"),
                             rs.getString("tamanho"));
                 }
-
-                System.out.format("+------+----------------------+------------+-----------------+------------+------------+-----------------+---------+%n");
+    
+                System.out.format("+------+----------------------+----------------------+-----------------+------------+------------+-----------------+---------+%n");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Ajusta o tamanho do texto para ocupar tamanho das colunas corretamente.
+     */
+    private String truncate(String text, int maxLength) {
+        if (text.length() <= maxLength) {
+            return text;
+        } else {
+            return text.substring(0, maxLength - 3) + "...";
         }
     }
 
