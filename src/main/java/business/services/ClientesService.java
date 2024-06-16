@@ -1,13 +1,20 @@
 package business.services;
+
 import java.io.Console; 
-
 import java.util.Scanner;
-
 import business.entities.Cliente;
 import data.repository.GerenciadorDeCliente;
 
+/**
+ * Serviço responsável por operações relacionadas a clientes.
+ */
 public class ClientesService {
-
+    /**
+     * Realiza o processo de login de um cliente.
+     *
+     * @param scanner Scanner para ler entrada do usuário.
+     * @return Cliente logado, ou null se o login falhar.
+     */
     public Cliente Loggin(Scanner scanner)
     {
         GerenciadorDeCliente gerenciadorDeCliente = new GerenciadorDeCliente();
@@ -53,6 +60,14 @@ public class ClientesService {
         return clienteAtual;
     }
 
+    /**
+     * Cria uma nova conta de cliente.
+     *
+     * @param scanner             Scanner para ler entrada do usuário.
+     * @param gerenciadorDeCliente Gerenciador de clientes para realizar operações no banco de dados.
+     * @param email               Email do cliente (pode ser null se não foi fornecido anteriormente).
+     * @return O novo Cliente criado e inserido no banco de dados.
+     */
     public Cliente criarConta(Scanner scanner, GerenciadorDeCliente gerenciadorDeCliente, String email) {
         System.out.print("Nome: ");
         String nome = scanner.nextLine();

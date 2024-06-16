@@ -7,8 +7,16 @@ import java.sql.SQLException;
 import business.entities.Compra;
 import data.Database;
 
+/**
+ * Esta classe contém métodos para gerenciar operações relacionadas a compras no banco de dados.
+ */
 public class GerenciadorDeCompras {
-
+    /**
+     * Insere uma nova compra no banco de dados.
+     *
+     * @param compra Objeto Compra contendo as informações da compra a ser inserida
+     * @return Objeto Compra atualizado com o ID gerado no banco de dados
+     */
     public Compra inserirCompra(Compra compra) {
         try (Connection connection = Database.getConnection()) {
             String sql = "INSERT INTO compras (clienteId, totalCompra) VALUES (?, ?)";
@@ -29,6 +37,13 @@ public class GerenciadorDeCompras {
         return compra;
     }
 
+    /**
+     * Insere um item de compra associado a uma compra existente no banco de dados.
+     *
+     * @param compraId   ID da compra associada ao item
+     * @param produtoId  ID do produto a ser associado ao item de compra
+     * @param quantidade Quantidade do produto comprada
+     */
     public void inserirItemCompra(int compraId, int produtoId, int quantidade) {
         try (Connection connection = Database.getConnection()) {
             String sql = "INSERT INTO itens_compra (compraId, produtoId, quantidade) VALUES (?, ?, ?)";
@@ -43,6 +58,11 @@ public class GerenciadorDeCompras {
         }
     }
 
+    /**
+     * Lista todas as compras realizadas por um cliente específico.
+     *
+     * @param clienteId ID do cliente para o qual as compras serão listadas
+     */
     public void listarComprasPorCliente(int clienteId) {
         try (Connection connection = Database.getConnection()) {
             String sql = "SELECT * FROM compras WHERE clienteId = ?";

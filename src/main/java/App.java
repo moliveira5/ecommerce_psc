@@ -14,6 +14,12 @@ import data.repository.GerenciadorDeCompras;
 import data.repository.GerenciadorDeEndereco;
 import data.repository.GerenciadorDeProdutos;
 
+/**
+ * Esta classe representa a aplicação principal do sistema de compras online.
+ * Ela gerencia a interação com o usuário através de menus, realiza operações de
+ * gerenciamento de produtos, carrinho de compras, checkout, login de clientes,
+ * entre outras funcionalidades relacionadas a um sistema de e-commerce.
+ */
 public class App {
     private Scanner scanner;
     private GerenciadorDeProdutos gerenciadorDeProdutos;
@@ -28,6 +34,10 @@ public class App {
     private Carrinho carrinho;
     private Cliente clienteAtual;
 
+    /**
+     * Construtor da classe App. Inicializa todos os serviços e recursos necessários
+     * para o funcionamento da aplicação.
+     */
     public App() {
         this.scanner = new Scanner(System.in);
         this.gerenciadorDeProdutos = new GerenciadorDeProdutos();
@@ -43,6 +53,11 @@ public class App {
         this.clienteAtual = null;
     }
 
+    /**
+     * Método principal que inicia a aplicação. Responsável por criar as tabelas caso não as tenha no
+     * banco de dados, realiza o login do cliente e direciona para o menu adequado
+     * com base no estado do login.
+     */
     public void startApp() {
         Database.createTables();
 
@@ -59,6 +74,10 @@ public class App {
         scanner.close();
     }
 
+    /**
+     * Imprime o menu principal para clientes logados, permitindo a interação com
+     * as funcionalidades do sistema.
+     */
     private void printLoggedMenu() {
         int opcao = 0;
         while (opcao != 9) {
@@ -129,6 +148,10 @@ public class App {
         }
     }
 
+    /**
+     * Imprime o menu principal para clientes não logados (visitantes), permitindo
+     * a interação com funcionalidades limitadas do sistema.
+     */
     private void printGuestMenu() {
         Console con = System.console(); 
         int opcao = 0;
@@ -201,6 +224,10 @@ public class App {
         }
     }
 
+    /**
+     * Método main da aplicação. Cria uma instância de App e inicia a execução do
+     * sistema de compras online.
+     */
     public static void main(String[] args) {
         App app = new App();
         app.startApp();

@@ -12,8 +12,16 @@ import business.entities.Cliente;
 import business.entities.Endereco;
 import data.Database;
 
+/**
+ * Esta classe contém métodos para gerenciar operações relacionadas a clientes no banco de dados.
+ */
 public class GerenciadorDeCliente {
-
+    /**
+     * Obtém um cliente com base no email.
+     *
+     * @param email Email do cliente a ser procurado
+     * @return Objeto Cliente correspondente ao email fornecido, ou null se não encontrado
+     */
     public Cliente obterPorEmail(String email)
     {
         Cliente cliente = null;
@@ -42,6 +50,11 @@ public class GerenciadorDeCliente {
         return cliente;
     }
 
+    /**
+     * Insere um novo cliente no banco de dados.
+     *
+     * @param cliente Objeto Cliente contendo as informações do cliente a ser inserido
+     */
     public void inserirCliente(Cliente cliente)
     {
         try (Connection connection = Database.getConnection()) {
@@ -66,6 +79,12 @@ public class GerenciadorDeCliente {
         }
     }
 
+    /**
+     * Obtém uma lista de endereços associados a um cliente específico.
+     *
+     * @param clienteId ID do cliente para o qual os endereços serão obtidos
+     * @return Lista de objetos Endereco associados ao cliente
+     */
     public List<Endereco> obterEnderecosPorClienteId(int clienteId) {
         List<Endereco> enderecos = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -87,6 +106,12 @@ public class GerenciadorDeCliente {
         return enderecos;
     }
 
+    /**
+     * Obtém uma lista de cartões associados a um cliente específico.
+     *
+     * @param clienteId ID do cliente para o qual os cartões serão obtidos
+     * @return Lista de objetos Cartao associados ao cliente
+     */
     public List<Cartao> obterCartoesPorClienteId(int clienteId) {
         List<Cartao> cartoes = new ArrayList<>();
         try (Connection connection = Database.getConnection()) {
@@ -111,6 +136,11 @@ public class GerenciadorDeCliente {
         return cartoes;
     }
 
+    /**
+     * Exibe os dados do cliente, incluindo seus endereços e cartões associados.
+     *
+     * @param email Email do cliente cujos dados serão exibidos
+     */
     public void exibirDadosCliente(String email) {
         Cliente cliente = obterPorEmail(email);
 

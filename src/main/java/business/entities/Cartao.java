@@ -1,11 +1,22 @@
 package business.entities;
 
+/**
+ * Representa um cartão de crédito utilizado para pagamentos.
+ */
 public class Cartao {
     private String numero;
     private String nomeTitular;
     private String dataValidade;
     private String cvv;
 
+    /**
+     * Construtor para inicializar um objeto Cartao com o número, nome do titular, data de validade e CVV fornecidos.
+     *
+     * @param numero      O número do cartão.
+     * @param nomeTitular O nome do titular do cartão.
+     * @param dataValidade A data de validade do cartão (no formato MM/AA).
+     * @param cvv         O código de segurança do cartão.
+     */
     public Cartao(String numero, String nomeTitular, String dataValidade, String cvv) {
         this.numero = numero;
         this.nomeTitular = nomeTitular;
@@ -13,50 +24,80 @@ public class Cartao {
         this.cvv = cvv;
     }
 
-    public String getNumero() 
-    {
+    /**
+     * Obtém o número do cartão.
+     *
+     * @return O número do cartão.
+     */
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) 
-    {
+    /**
+     * Define o número do cartão.
+     *
+     * @param numero O número do cartão a ser definido.
+     */
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
-    public String getNomeTitular() 
-    {
+    /**
+     * Obtém o nome do titular do cartão.
+     *
+     * @return O nome do titular do cartão.
+     */
+    public String getNomeTitular() {
         return nomeTitular;
     }
 
-    public void setNomeTitular(String nomeTitular) 
-    {
+    /**
+     * Define o nome do titular do cartão.
+     *
+     * @param nomeTitular O nome do titular do cartão a ser definido.
+     */
+    public void setNomeTitular(String nomeTitular) {
         this.nomeTitular = nomeTitular;
     }
 
-    public String getDataValidade() 
-    {
+    /**
+     * Obtém a data de validade do cartão.
+     *
+     * @return A data de validade do cartão.
+     */
+    public String getDataValidade() {
         return dataValidade;
     }
 
-    public void setDataValidade(String dataValidade) 
-    {
+    /**
+     * Define a data de validade do cartão.
+     *
+     * @param dataValidade A data de validade do cartão a ser definida.
+     */
+    public void setDataValidade(String dataValidade) {
         this.dataValidade = dataValidade;
     }
 
-    public String getCvv() 
-    {
+    /**
+     * Obtém o código de segurança (CVV) do cartão.
+     *
+     * @return O CVV do cartão.
+     */
+    public String getCvv() {
         return cvv;
     }
 
+    /**
+     * Define o código de segurança (CVV) do cartão.
+     *
+     * @param cvv O CVV do cartão a ser definido.
+     */
     public void setCvv(String cvv) {
-
         this.cvv = cvv;
     }
 
-
     @Override
-    public String toString() 
-    {
+    public String toString() {
         return "Cartao{" +
                 "numero='" + numero + '\'' +
                 ", nomeTitular='" + nomeTitular + '\'' +

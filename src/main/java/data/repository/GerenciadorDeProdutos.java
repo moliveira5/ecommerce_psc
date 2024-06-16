@@ -6,7 +6,15 @@ import java.util.Scanner;
 import business.entities.Produto;
 import data.Database;
 
+/**
+ * Esta classe contém métodos para realizar operações CRUD na tabela de produtos no banco de dados.
+ */
 public class GerenciadorDeProdutos {
+    /**
+     * Insere um novo produto na tabela de produtos.
+     *
+     * @param scanner Scanner para entrada de dados do usuário
+     */
     public void inserirProduto(Scanner scanner) {
         System.out.print("Nome: ");
         String nome = scanner.nextLine();
@@ -41,6 +49,11 @@ public class GerenciadorDeProdutos {
         }
     }
 
+    /**
+     * Altera um produto existente na tabela de produtos.
+     *
+     * @param scanner Scanner para entrada de dados do usuário
+     */
     public void alterarProduto(Scanner scanner) {
         System.out.print("ID do produto a alterar: ");
         int id = scanner.nextInt();
@@ -78,6 +91,11 @@ public class GerenciadorDeProdutos {
         }
     }
 
+    /**
+     * Remove um produto da tabela de produtos com base no ID fornecido.
+     *
+     * @param scanner Scanner para entrada de dados do usuário
+     */
     public void removerProduto(Scanner scanner) {
         System.out.print("ID do produto a remover: ");
         int id = scanner.nextInt();
@@ -98,6 +116,9 @@ public class GerenciadorDeProdutos {
         }
     }
 
+    /**
+     * Lista todos os produtos da tabela de produtos.
+     */
     public void listarProdutos() {
         try (Connection connection = Database.getConnection()) {
             String sql = "SELECT * FROM produtos";
@@ -128,6 +149,12 @@ public class GerenciadorDeProdutos {
         }
     }
 
+    /**
+     * Retorna um produto da tabela de produtos com base no ID fornecido.
+     *
+     * @param id ID do produto a ser recuperado
+     * @return Produto correspondente ao ID, ou null se não encontrado
+     */
     public Produto getProdutoById(int id) {
         Produto produto = null;
         try (Connection connection = Database.getConnection()) {

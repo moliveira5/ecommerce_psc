@@ -6,12 +6,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
+/**
+ * Esta classe gerencia a conexão com o banco de dados e criação das tabelas necessárias.
+ */
 public class Database {
     private static final String URL = "jdbc:mysql://localhost:3306/";
     private static final String DATABASE_NAME = "loja_esportes";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
+    /**
+     * Obtém uma conexão com o banco de dados. Se o banco de dados não existir, ele é criado.
+     *
+     * @return conexão com o banco de dados
+     * @throws SQLException se houver um erro ao estabelecer a conexão
+     */
     public static Connection getConnection() throws SQLException {
         try {
             Connection connection = DriverManager.getConnection(URL + DATABASE_NAME, USER, PASSWORD);
@@ -28,6 +37,14 @@ public class Database {
         }
     }
 
+    /**
+     * Verifica se o banco de dados especificado existe.
+     *
+     * @param connection conexão com o servidor de banco de dados
+     * @param databaseName nome do banco de dados a ser verificado
+     * @return true se o banco de dados existe, false caso contrário
+     * @throws SQLException se houver um erro ao executar a consulta
+     */
     private static boolean databaseExists(Connection connection, String databaseName) throws SQLException {
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SHOW DATABASES")) {
@@ -41,6 +58,11 @@ public class Database {
         return false;
     }
 
+    /**
+     * Cria o banco de dados especificado.
+     *
+     * @throws SQLException se houver um erro ao criar o banco de dados
+     */
     private static void createDatabase() throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement statement = connection.createStatement()) {
@@ -49,6 +71,9 @@ public class Database {
         }
     }
 
+    /**
+     * Cria as tabelas necessárias no banco de dados, se elas ainda não existirem.
+     */
     public static void createTables() {
         try (Connection connection = Database.getConnection();
              Statement statement = connection.createStatement()) {
@@ -118,7 +143,9 @@ public class Database {
         }
     }
     
-
+    /**
+     * Método principal para executar a criação das tabelas e a população inicial dos dados.
+     */
     public static void main(String[] args) {
         createTables();
         PopulateData.populate();

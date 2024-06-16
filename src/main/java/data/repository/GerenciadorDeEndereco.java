@@ -7,8 +7,16 @@ import java.sql.SQLException;
 import business.entities.Endereco;
 import data.Database;
 
+/**
+ * Esta classe contém métodos para gerenciar operações relacionadas a endereços no banco de dados.
+ */
 public class GerenciadorDeEndereco {
-
+    /**
+     * Obtém um endereço pelo seu ID.
+     *
+     * @param id ID do endereço a ser buscado
+     * @return Objeto Endereco se encontrado, caso contrário null
+     */
     public Endereco obterPorId(int id) {
         Endereco endereco = null;
         try (Connection connection = Database.getConnection()) {
@@ -31,6 +39,12 @@ public class GerenciadorDeEndereco {
         return endereco;
     }
 
+    /**
+     * Insere um novo endereço no banco de dados associado a um cliente.
+     *
+     * @param endereco  Objeto Endereco contendo as informações do endereço a ser inserido
+     * @param clienteId ID do cliente associado ao endereço
+     */
     public void inserirEndereco(Endereco endereco, int clienteId) {
         try (Connection connection = Database.getConnection()) {
             String sql = "INSERT INTO enderecos (enderecoCompleto, clienteId) VALUES (?, ?)";
@@ -50,6 +64,12 @@ public class GerenciadorDeEndereco {
         }
     }
 
+    /**
+     * Edita o endereço de um cliente pelo ID do endereço.
+     *
+     * @param id ID do endereço a ser editado
+     * @param novoEnderecoCompleto Novo endereço completo a ser atualizado
+     */
     public void editarEnderecoPorId(int id, String novoEnderecoCompleto) {
         try (Connection connection = Database.getConnection()) {
             String sql = "UPDATE enderecos SET enderecoCompleto = ? WHERE id = ?";

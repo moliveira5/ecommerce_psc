@@ -4,12 +4,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import business.entities.Cartao;
 import data.Database;
 
+/**
+ * Esta classe contém métodos para gerenciar operações relacionadas a pagamentos com cartão no banco de dados.
+ */
 public class GerenciadorDePagamento {
-
+    /**
+     * Insere um novo cartão de pagamento associado a um cliente no banco de dados.
+     *
+     * @param cartao    Objeto Cartao contendo as informações do cartão a ser inserido
+     * @param clienteId ID do cliente associado ao cartão
+     */
     public void SetarNovoPagamentoCartao(Cartao cartao, int clienteId)
     {
         try (Connection connection = Database.getConnection()) {
@@ -27,6 +34,12 @@ public class GerenciadorDePagamento {
         }
     }
 
+    /**
+     * Obtém um cartão de pagamento pelo número do cartão.
+     *
+     * @param numero Número do cartão a ser procurado
+     * @return Objeto Cartao se encontrado, caso contrário null
+     */
     public Cartao ObterCartaoPorNumero(String numero)
     {
         Cartao cartao = null;
@@ -52,6 +65,12 @@ public class GerenciadorDePagamento {
         return cartao;
     }
 
+    /**
+     * Obtém um cartão de pagamento pelo ID do cliente associado.
+     *
+     * @param clienteId ID do cliente associado ao cartão
+     * @return Objeto Cartao se encontrado, caso contrário null
+     */
     public Cartao ObterCartaoPorClienteId(int clienteId)
     {
         Cartao cartao = null;
@@ -76,6 +95,4 @@ public class GerenciadorDePagamento {
         }
         return cartao;
     }
-    
-    
 }
