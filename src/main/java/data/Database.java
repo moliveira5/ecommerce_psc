@@ -10,7 +10,7 @@ public class Database {
     private static final String URL = "jdbc:mysql://localhost:3306/";
     private static final String DATABASE_NAME = "loja_esportes";
     private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "";
 
     public static Connection getConnection() throws SQLException {
         try {
@@ -111,6 +111,8 @@ public class Database {
                     + "PRIMARY KEY (compraId, produtoId)"
                     + ")";
             statement.execute(createTableItensCompra);
+
+            PopulateData.populate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -119,5 +121,6 @@ public class Database {
 
     public static void main(String[] args) {
         createTables();
+        PopulateData.populate();
     }
 }

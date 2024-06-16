@@ -1,7 +1,0 @@
-INSERT INTO loja_esportes.enderecos 
-VALUES
-(NULL, 'Rua Ficticia, 001 - Bairro Inventado, Cidade Qualquer - Estado Algum', 1),
-(NULL, 'Rua Ficticia, 002 - Bairro Inventado, Cidade Qualquer - Estado Algum', 2),
-(NULL, 'Rua Ficticia, 003 - Bairro Inventado, Cidade Qualquer - Estado Algum', 3),
-(NULL, 'Rua Ficticia, 004 - Bairro Inventado, Cidade Qualquer - Estado Algum', 4),
-(NULL, 'Rua Ficticia, 005 - Bairro Inventado, Cidade Qualquer - Estado Algum', 5);

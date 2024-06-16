@@ -1,4 +1,5 @@
 package business.services;
+import java.io.Console; 
 
 import java.util.Scanner;
 
@@ -10,6 +11,7 @@ public class ClientesService {
     public Cliente Loggin(Scanner scanner)
     {
         GerenciadorDeCliente gerenciadorDeCliente = new GerenciadorDeCliente();
+        Console con = System.console(); 
 
         System.out.println("Menu de Login:");
         System.out.println("1. Login");
@@ -26,7 +28,8 @@ public class ClientesService {
                 System.out.print("Email: ");
                 String emailLogin = scanner.nextLine();
                 System.out.print("Senha: ");
-                String senhaLogin = scanner.nextLine();
+                char[] ch = con.readPassword();
+                String senhaLogin = String.valueOf(ch);
                 clienteAtual = gerenciadorDeCliente.obterPorEmail(emailLogin);
                 if (clienteAtual != null && clienteAtual.getSenha().equals(senhaLogin)) {
                     System.out.println("Login realizado com sucesso.");

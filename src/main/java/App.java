@@ -1,4 +1,4 @@
-
+import java.io.Console; 
 import java.util.Scanner;
 import business.entities.Carrinho;
 import business.entities.Cliente;
@@ -121,6 +121,7 @@ public class App {
     }
 
     private static void printGuestMenu(Scanner scanner, GerenciadorDeProdutos gerenciadorDeProdutos, Carrinho carrinho, Cliente clienteAtual, CartaoService cartaoService, EnderecosService enderecosService, CheckoutService checkout, GerenciadorDeCompras gerenciadorDeCompras, ComprasService comprasService, GerenciadorDeEndereco gerenciadorDeEndereco, GerenciadorDeCliente gerenciadorDeCliente) {
+        Console con = System.console(); 
         int opcao = 0;
         while (opcao != 6) {
             System.out.println("Menu de opções:");
@@ -169,7 +170,8 @@ public class App {
                     System.out.print("Email: ");
                     String emailLogin = scanner.nextLine();
                     System.out.print("Senha: ");
-                    String senhaLogin = scanner.nextLine();
+                    char[] ch = con.readPassword();
+                    String senhaLogin = String.valueOf(ch);
                     clienteAtual = gerenciadorDeCliente.obterPorEmail(emailLogin);
                     if (clienteAtual != null && clienteAtual.getSenha().equals(senhaLogin)) {
                         System.out.println("Login realizado com sucesso.");
