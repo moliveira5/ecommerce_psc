@@ -1,4 +1,4 @@
-import java.io.Console; 
+import java.io.Console;
 import java.util.Scanner;
 import business.entities.Carrinho;
 import business.entities.Cliente;
@@ -15,42 +15,51 @@ import data.repository.GerenciadorDeEndereco;
 import data.repository.GerenciadorDeProdutos;
 
 public class App {
-    public static void main(String[] args) {
+    private Scanner scanner;
+    private GerenciadorDeProdutos gerenciadorDeProdutos;
+    private GerenciadorDeCliente gerenciadorDeCliente;
+    private ClientesService clientesService;
+    private CartaoService cartaoService;
+    private EnderecosService enderecosService;
+    private CheckoutService checkout;
+    private GerenciadorDeCompras gerenciadorDeCompras;
+    private ComprasService comprasService;
+    private GerenciadorDeEndereco gerenciadorDeEndereco;
+    private Carrinho carrinho;
+    private Cliente clienteAtual;
+
+    public App() {
+        this.scanner = new Scanner(System.in);
+        this.gerenciadorDeProdutos = new GerenciadorDeProdutos();
+        this.gerenciadorDeCliente = new GerenciadorDeCliente();
+        this.clientesService = new ClientesService();
+        this.cartaoService = new CartaoService();
+        this.enderecosService = new EnderecosService();
+        this.checkout = new CheckoutService();
+        this.gerenciadorDeCompras = new GerenciadorDeCompras();
+        this.comprasService = new ComprasService();
+        this.gerenciadorDeEndereco = new GerenciadorDeEndereco();
+        this.carrinho = new Carrinho();
+        this.clienteAtual = null;
+    }
+
+    public void startApp() {
         Database.createTables();
-
-        Scanner scanner = new Scanner(System.in);
-        GerenciadorDeProdutos gerenciadorDeProdutos = new GerenciadorDeProdutos();
-
-        GerenciadorDeCliente gerenciadorDeCliente = new GerenciadorDeCliente();
-        ClientesService clientesService = new ClientesService();
-
-        CartaoService cartaoService = new CartaoService();
-
-        GerenciadorDeEndereco gerenciadorDeEndereco = new GerenciadorDeEndereco();
-        EnderecosService enderecosService = new EnderecosService();
-
-        CheckoutService checkout = new CheckoutService();
-        Carrinho carrinho = new Carrinho();
-
-        GerenciadorDeCompras gerenciadorDeCompras = new GerenciadorDeCompras();
-        ComprasService comprasService = new ComprasService();
-
-        Cliente clienteAtual = null;
 
         while (clienteAtual == null) {
             clienteAtual = clientesService.Loggin(scanner);
         }
 
         if (clienteAtual.getId() != 0) {
-            printLoggedMenu(scanner, gerenciadorDeProdutos, carrinho, clienteAtual, cartaoService, enderecosService, checkout, gerenciadorDeCompras, comprasService, gerenciadorDeEndereco, gerenciadorDeCliente);
+            printLoggedMenu();
         } else {
-            printGuestMenu(scanner, gerenciadorDeProdutos, carrinho, clienteAtual, cartaoService, enderecosService, checkout, gerenciadorDeCompras, comprasService, gerenciadorDeEndereco, gerenciadorDeCliente);
+            printGuestMenu();
         }
 
         scanner.close();
     }
 
-    private static void printLoggedMenu(Scanner scanner, GerenciadorDeProdutos gerenciadorDeProdutos, Carrinho carrinho, Cliente clienteAtual, CartaoService cartaoService, EnderecosService enderecosService, CheckoutService checkout, GerenciadorDeCompras gerenciadorDeCompras, ComprasService comprasService, GerenciadorDeEndereco gerenciadorDeEndereco, GerenciadorDeCliente gerenciadorDeCliente) {
+    private void printLoggedMenu() {
         int opcao = 0;
         while (opcao != 9) {
             System.out.println("Menu de opções:");
@@ -120,7 +129,7 @@ public class App {
         }
     }
 
-    private static void printGuestMenu(Scanner scanner, GerenciadorDeProdutos gerenciadorDeProdutos, Carrinho carrinho, Cliente clienteAtual, CartaoService cartaoService, EnderecosService enderecosService, CheckoutService checkout, GerenciadorDeCompras gerenciadorDeCompras, ComprasService comprasService, GerenciadorDeEndereco gerenciadorDeEndereco, GerenciadorDeCliente gerenciadorDeCliente) {
+    private void printGuestMenu() {
         Console con = System.console(); 
         int opcao = 0;
         while (opcao != 6) {
@@ -175,7 +184,7 @@ public class App {
                     clienteAtual = gerenciadorDeCliente.obterPorEmail(emailLogin);
                     if (clienteAtual != null && clienteAtual.getSenha().equals(senhaLogin)) {
                         System.out.println("Login realizado com sucesso.");
-                        printLoggedMenu(scanner, gerenciadorDeProdutos, carrinho, clienteAtual, cartaoService, enderecosService, checkout, gerenciadorDeCompras, comprasService, gerenciadorDeEndereco, gerenciadorDeCliente);
+                        printLoggedMenu();
                         return;
                     } else {
                         System.out.println("Email ou senha incorretos.");
@@ -190,5 +199,10 @@ public class App {
                     break;
             }
         }
+    }
+
+    public static void main(String[] args) {
+        App app = new App();
+        app.startApp();
     }
 }
